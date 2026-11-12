@@ -23,6 +23,9 @@ dependencies = [
 [package.dev-dependencies]
 backend = [
     { name = "fastapi" },
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "scipy" },
     { name = "uvicorn" },
 ]
 dev = [
@@ -43,6 +46,9 @@ requires-dist = [
 [package.metadata.requires-dev]
 backend = [
     { name = "fastapi", specifier = ">=0.162.5" },
+    { name = "numpy", specifier = ">=2.5.4" },
+    { name = "pandas", specifier = ">=3.1.1" },
+    { name = "scipy", specifier = ">=1.18.1" },
     { name = "uvicorn", specifier = ">=0.54.0" },
 ]
 dev = [

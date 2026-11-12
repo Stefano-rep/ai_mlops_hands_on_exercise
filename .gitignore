@@ -226,3 +226,5 @@ datasets/
 node_modules/
 .uv-cache/
 .npm-cache/
+**/test-results/
+**/playwright-report/

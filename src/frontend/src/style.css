@@ -1,9 +1,30 @@
-:root { font-family: system-ui, sans-serif; color: #e5edf9; background: #101827; }
-body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
-main { width: min(680px, 85vw); padding: 3rem 0; }
-h1 { font-size: clamp(2.5rem, 7vw, 4rem); line-height: 1.1; }
+﻿:root { font-family: system-ui, sans-serif; color: #e5edf9; background: #101827; color-scheme: dark; }
+body { margin: 0; }
+main { max-width: 1440px; margin: auto; padding: 2rem clamp(1rem, 4vw, 4rem); }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin: .5rem 0; }
 p { color: #b3c2d9; line-height: 1.6; }
-.eyebrow { color: #80d4c1; letter-spacing: .12em; text-transform: uppercase; }
-.status { margin: 2rem 0; padding: 1.25rem; border: 1px solid #385569; border-radius: .75rem; }
-.error { border-color: #f29b9b; }
-a { color: #80d4c1; }
+.eyebrow { color: #80d4c1; letter-spacing: .1em; text-transform: uppercase; }
+.controls, form, nav { display: flex; flex-wrap: wrap; align-items: end; gap: 1rem; margin: 1.5rem 0; }
+form { margin: 0; }
+label { display: flex; flex-direction: column; gap: .4rem; text-transform: capitalize; }
+input, select, button { font: inherit; color: inherit; padding: .65rem; border: 1px solid #536782; border-radius: .4rem; background: #1b2940; }
+button { cursor: pointer; }
+button[aria-pressed=true] { background: #246456; border-color: #80d4c1; }
+button:disabled { opacity: .4; cursor: default; }
+:focus-visible { outline: 2px solid #80d4c1; outline-offset: 3px; }
+.check { flex-direction: row; padding: .6rem; }
+.table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: .85rem; }
+th, td { padding: .7rem; border: 1px solid #35455d; white-space: nowrap; text-align: left; }
+th { background: #1b2940; }
+caption { text-align: left; padding: 1rem 0; color: #b3c2d9; }
+.bars { margin: 2rem 0; }
+.bar-row { display: grid; grid-template-columns: minmax(110px, 230px) minmax(60px, 1fr) 90px; align-items: center; gap: .75rem; margin: .65rem 0; font-size: .85rem; }
+.bar-row > span { overflow-wrap: anywhere; }
+.track { background: #1b2940; border-radius: .2rem; overflow: hidden; }
+.bar { height: 1.25rem; background: #80d4c1; min-width: 0; }
+.bar-row strong { text-align: right; }
+dl { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+dt { color: #b3c2d9; } dd { margin: .4rem 0; }
+.error { color: #ffb4b4; }
+a { color: #80d4c1; } footer { margin-top: 3rem; }

@@ -1,5 +1,12 @@
 services:
   backend:
+    volumes:
+      - type: bind
+        source: ./datasets/census_income_cleaned.csv
+        target: /app/datasets/census_income_cleaned.csv
+        read_only: true
+        bind:
+          create_host_path: false
     build:
       context: .
       dockerfile: src/backend/Dockerfile
