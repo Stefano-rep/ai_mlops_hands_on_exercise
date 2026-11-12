@@ -72,7 +72,7 @@ function Explorer({ meta }) {
     <nav aria-label="Explorer views">{[['records', 'Data'], ['distribution', 'Distributions'], ['correlations', 'Correlations']].map(([key, label]) => <button aria-pressed={tab === key} key={key} onClick={() => setTab(key)}>{label}</button>)}</nav>
     {tab === 'distribution' && <section className="controls">
       <label>Analysis<select value={education ? 'education' : 'feature'} onChange={e => setEducation(e.target.value === 'education')}><option value="feature">Feature distribution</option><option value="education">Education levels (%)</option></select></label>
-      {!education && <><label>Feature<select value={column} onChange={e => setColumn(e.target.value)}>{meta.columns.map(col => <option key={col}>{col}</option>)}</select></label>
+      {!education && <><label>Feature<select value={column} onChange={e => setColumn(e.target.value)}>{meta.columns.filter(col => col !== 'fnlwgt').map(col => <option key={col}>{col}</option>)}</select></label>
       {numeric && <><label>Histogram bins<select value={bins} onChange={e => setBins(Number(e.target.value))}>{[10, 20, 30, 50].map(n => <option key={n}>{n}</option>)}</select></label><label className="check"><input type="checkbox" checked={weighted} onChange={e => setWeighted(e.target.checked)} />Weight by fnlwgt</label></>}</>}
     </section>}
     {tab === 'correlations' && <label>Method<select value={method} onChange={e => setMethod(e.target.value)}><option value="pearson">Pearson · numeric features</option><option value="cramers_v">Cramér’s V · categorical features</option></select></label>}
