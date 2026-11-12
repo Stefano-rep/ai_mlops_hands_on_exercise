@@ -28,3 +28,6 @@ dl { display: flex; gap: 1.5rem; flex-wrap: wrap; }
 dt { color: #b3c2d9; } dd { margin: .4rem 0; }
 .error { color: #ffb4b4; }
 a { color: #80d4c1; } footer { margin-top: 3rem; }
+.notebook-note { margin: 1.5rem 0; padding: 1.25rem; border-left: 3px solid #80d4c1; background: #1b2940; border-radius: .3rem; }
+.notebook-note h3 { margin: 0; }
+.notebook-note small { color: #b3c2d9; line-height: 1.6; }

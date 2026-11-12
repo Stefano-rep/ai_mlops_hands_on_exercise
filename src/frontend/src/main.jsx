@@ -1,6 +1,15 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './style.css';
+import { distributionNotes, correlationNotes } from './notebookNotes';
+
+function NotebookNote({ text }) {
+  if (!text) return null;
+  return <aside className="notebook-note" aria-label="Analysis observation">
+    <h3>Analysis observation</h3><p>{text}</p>
+    <small>This observation describes the full dataset, rather than the currently selected filters or weighting.</small>
+  </aside>;
+}
 
 function useApi(path) {
   const [state, setState] = useState({ path: null, data: null, error: '', loading: true });
@@ -82,8 +91,8 @@ function Explorer({ meta }) {
       {data.total === 0 ? <p>No records match these filters.</p> : <>
       {tab === 'records' && <><div className="table-wrap"><table><thead><tr>{data.columns.map(col => <th key={col}>{col}</th>)}</tr></thead><tbody>{data.rows.map((row, i) => <tr key={i}>{row.map((cell, j) => <td key={j}>{cell ?? '—'}</td>)}</tr>)}</tbody></table></div>
       <div className="controls"><button disabled={page <= 1} onClick={() => setPage(page - 1)}>Previous</button><span>Page {page} of {Math.ceil(data.total / pageSize)}</span><button disabled={page * pageSize >= data.total} onClick={() => setPage(page + 1)}>Next</button><label>Rows per page<select value={pageSize} onChange={e => updateFilter(setPageSize, Number(e.target.value))}>{[25, 50, 100].map(n => <option key={n}>{n}</option>)}</select></label></div></>}
-      {tab === 'distribution' && <><h2>{education ? 'Education levels' : column}</h2><p>{education || numeric ? `Percentage (%)${!education && weighted ? ' · weighted by fnlwgt' : ''}` : 'Record count'}</p><Bars data={data} />{Object.keys(data.summary).length > 0 && <><h2>Descriptive statistics (unweighted)</h2><dl>{Object.entries(data.summary).map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value == null ? '—' : value.toLocaleString(undefined, { maximumFractionDigits: 2 })}</dd></div>)}</dl></>}</>}
-      {tab === 'correlations' && <Matrix data={data} method={method} />}
+      {tab === 'distribution' && <><h2>{education ? 'Education levels' : column}</h2><p>{education || numeric ? `Percentage (%)${!education && weighted ? ' · weighted by fnlwgt' : ''}` : 'Record count'}</p><Bars data={data} /><NotebookNote text={distributionNotes[education ? 'education_num' : column]} />{Object.keys(data.summary).length > 0 && <><h2>Descriptive statistics (unweighted)</h2><dl>{Object.entries(data.summary).map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value == null ? '—' : value.toLocaleString(undefined, { maximumFractionDigits: 2 })}</dd></div>)}</dl></>}</>}
+      {tab === 'correlations' && <><Matrix data={data} method={method} /><NotebookNote text={correlationNotes[method]} /></>}
       </>}</>}
     </section><footer><a href="/api/docs">API documentation</a></footer>
   </>;
