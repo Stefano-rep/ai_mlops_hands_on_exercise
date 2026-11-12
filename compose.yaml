@@ -1,4 +1,24 @@
 services:
+  agent:
+    profiles: ["agent"]
+    build:
+      context: .
+      dockerfile: ai/agent/Dockerfile
+    stdin_open: true
+    tty: true
+    environment:
+      AGENT_PROVIDER: ${AGENT_PROVIDER:-mock}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-sk-fake-key-replace-me}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+      ML_MODEL_PATH: /app/artifacts/mlp_pipeline.joblib
+    volumes:
+      - type: bind
+        source: ./artifacts/mlp_pipeline.joblib
+        target: /app/artifacts/mlp_pipeline.joblib
+        read_only: true
+        bind:
+          create_host_path: false
+
   backend:
     volumes:
       - type: bind
