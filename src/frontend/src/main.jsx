@@ -47,7 +47,7 @@ function Bars({ data }) {
 function Matrix({ data, method }) {
   return <div className="table-wrap"><table><caption>{method === 'pearson' ? 'Pearson correlation (−1 to 1)' : "Cramér’s V (0 to 1). — indicates an undefined value or a variable with at most two categories, as in the notebook."}</caption>
     <thead><tr><th>Feature</th>{data.columns.map(col => <th key={col}>{col}</th>)}</tr></thead>
-    <tbody>{data.values.map((row, i) => <tr key={data.columns[i]}><th>{data.columns[i]}</th>{row.map((value, j) => <td key={j} style={{ background: value === null ? 'transparent' : `rgba(${value < 0 ? '214, 90, 100' : '45, 150, 190'}, ${Math.abs(value) * .8})` }}>{value === null ? '—' : value.toFixed(2)}</td>)}</tr>)}</tbody>
+    <tbody>{data.values.map((row, i) => <tr key={data.columns[i]}><th>{data.columns[i]}</th>{row.map((value, j) => <td key={j} style={{ background: value === null ? 'transparent' : `rgba(${value < 0 ? '193, 113, 62' : '174, 141, 69'}, ${Math.abs(value) * .65})` }}>{value === null ? '—' : value.toFixed(2)}</td>)}</tr>)}</tbody>
   </table></div>;
 }
 
@@ -72,20 +72,26 @@ function Explorer({ meta }) {
   const { data, error, loading } = useApi(endpoint);
   const updateFilter = (setter, value) => { setter(value); setPage(1); };
   return <>
-    <header><p className="eyebrow">Census income · {meta.total.toLocaleString()} records</p><h1>Explore the census</h1><p>Browse the cleaned data and explore the distributions and correlations from the analysis notebooks.</p></header>
+    <div className="topbar"><span className="brand"><span className="brand-mark" aria-hidden="true">C</span>Census Studio</span><span className="topbar-description">Income & population insights</span><a href="/api/docs">API documentation <span aria-hidden="true">↗</span></a></div>
+    <aside className="sidebar" aria-label="Dashboard menu">
+      <p className="menu-heading">Workspace</p>
+      <nav aria-label="Explorer views">{[['records', 'Data', 'M3 3h18v18H3z M3 9h18 M9 3v18'], ['distribution', 'Distributions', 'M4 20V10h4v10 M10 20V4h4v16 M16 20v-7h4v7'], ['correlations', 'Correlations', 'M4 4h5v5H4z M15 4h5v5h-5z M4 15h5v5H4z M15 15h5v5h-5z']].map(([key, label, icon]) => <button aria-pressed={tab === key} key={key} onClick={() => setTab(key)}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d={icon} /></svg>{label}</button>)}</nav>
+      <div className="sidebar-summary"><span className="dataset-dot" aria-hidden="true" /><strong>Cleaned census</strong><p>{meta.total.toLocaleString()} records<br />{meta.columns.length} features</p><span className="dataset-badge">Ready to explore</span></div>
+      <p className="sidebar-footer">AI/MLops Hands-On<br /><span>Discover the stories in your data.</span></p>
+    </aside>
+    <header className="page-header"><p className="eyebrow">Workspace / {tab === 'records' ? 'Data' : tab === 'distribution' ? 'Distributions' : 'Correlations'}</p><h1>{tab === 'records' ? 'Explore the census' : tab === 'distribution' ? 'Understand the distributions' : 'Discover relationships'}</h1><p>Browse the cleaned data and explore the distributions and correlations from the analysis notebooks.</p></header>
     <section className="controls" aria-label="Dataset filters">
       <form onSubmit={event => { event.preventDefault(); updateFilter(setSearch, draft); }}><label>Search all columns<input value={draft} onChange={event => setDraft(event.target.value)} maxLength={200} /></label><button>Search</button></form>
       {['income', 'sex'].map(key => <label key={key}>{key}<select value={key === 'income' ? income : sex} onChange={event => updateFilter(key === 'income' ? setIncome : setSex, event.target.value)}><option value="">All</option>{meta.filters[key].map(value => <option key={value}>{value}</option>)}</select></label>)}
       <button onClick={() => { setSearch(''); setDraft(''); setIncome(''); setSex(''); setPage(1); }}>Reset filters</button>
     </section>
-    <nav aria-label="Explorer views">{[['records', 'Data'], ['distribution', 'Distributions'], ['correlations', 'Correlations']].map(([key, label]) => <button aria-pressed={tab === key} key={key} onClick={() => setTab(key)}>{label}</button>)}</nav>
     {tab === 'distribution' && <section className="controls">
       <label>Analysis<select value={education ? 'education' : 'feature'} onChange={e => setEducation(e.target.value === 'education')}><option value="feature">Feature distribution</option><option value="education">Education levels (%)</option></select></label>
       {!education && <><label>Feature<select value={column} onChange={e => setColumn(e.target.value)}>{meta.columns.filter(col => col !== 'fnlwgt').map(col => <option key={col}>{col}</option>)}</select></label>
       {numeric && <><label>Histogram bins<select value={bins} onChange={e => setBins(Number(e.target.value))}>{[10, 20, 30, 50].map(n => <option key={n}>{n}</option>)}</select></label><label className="check"><input type="checkbox" checked={weighted} onChange={e => setWeighted(e.target.checked)} />Weight by fnlwgt</label></>}</>}
     </section>}
     {tab === 'correlations' && <label>Method<select value={method} onChange={e => setMethod(e.target.value)}><option value="pearson">Pearson · numeric features</option><option value="cramers_v">Cramér’s V · categorical features</option></select></label>}
-    <section aria-live="polite" aria-busy={loading}>
+    <section className="results-panel" aria-live="polite" aria-busy={loading}>
       {loading && <p>Loading…</p>}{error && <p role="alert" className="error">{error}</p>}
       {data && <><p>{data.total.toLocaleString()} matching records. Analyses use all matching records.</p>
       {data.total === 0 ? <p>No records match these filters.</p> : <>
