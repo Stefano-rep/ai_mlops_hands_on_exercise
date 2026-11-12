@@ -1,0 +1,12 @@
+.git
+.venv
+.uv-cache
+.npm-cache
+**/__pycache__
+**/node_modules
+**/dist
+.pytest_cache
+datasets
+notebooks
+.env
+*.log

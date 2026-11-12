@@ -1,21 +1,5 @@
 # Task 1 report: Data Analysis
 
-> **Guidance.** Copy this file to `reports/task[N].md` at the end of each task and fill it in as you go.
->
-> - Replace every [placeholder]; delete every Guidance block before you tag.
-> - Keep it short: one to three pages. Prefer tables and figures to prose.
-> - Write in English, in your own words. Explain *why*; do not paste code the reader can open in the repository.
-> - Every section ends with an **Evidence** line: a notebook cell, file path, test, commit or screenshot. A claim with no evidence counts as not done.
->
-> What to focus on in sections 3 and 4:
->
-> | Task | Focus on |
-> | --- | --- |
-> | 1. Exploratory data analysis | Data quality checks and fixes; main findings, each with a number; what each finding means for later tasks |
-> | 2. App deployment | Architecture; image and configuration choices; how the app gets its data; deployment trade-offs |
-> | 3. AI agent | Evaluation protocol and baseline; model choice; agent tools and prompt rules; example dialogues including one failure; deployment |
-> | 4. Presentation | Overall architecture; decision log across all tasks; what you would change for production |
-
 | Field | Value |
 | --- | --- |
 | Student | Stefano Benaglia |
@@ -52,8 +36,6 @@ With a multivariate analysis it was also found that the income of people with th
 The most important limitation in this phase was time.
 
 ## 2. Goal and success criteria
-
-> **Guidance.** State what the task asked for and how you decide whether you succeeded. Fix the criteria before you look at results.
 
 **Goal.** analyse the dataset to find correlations, anomalies and format the dataset for a correct data analysis
 

@@ -12,6 +12,10 @@ dependencies = [
 ]
 
 [dependency-groups]
+backend = [
+    "fastapi>=0.162.5",
+    "uvicorn>=0.54.0",
+]
 dev = [
     "ipykernel>=7.4.0",
     "pytest>=9.2.0",

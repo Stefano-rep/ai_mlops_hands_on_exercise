@@ -221,3 +221,8 @@ __marimo__/
 
 # Datasets
 datasets/
+
+# Frontend and local dependency cache
+node_modules/
+.uv-cache/
+.npm-cache/
